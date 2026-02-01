@@ -13,6 +13,7 @@ function Login(){
         localStorage.setItem("token", res.data.token);
         alert("Login Successfull");
         console.log("Token:", res.data.token);
+        window.location.href = "/projects";
      }
      catch(err){
         alert("Login Failed");
