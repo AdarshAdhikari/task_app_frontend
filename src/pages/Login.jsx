@@ -1,5 +1,6 @@
 import { useState } from "react";   
 import API from "../api/api";
+import "./login.css";
 
 function Login(){
 
@@ -22,7 +23,8 @@ function Login(){
 
     };
     return(
-        <div>
+        <div className="login-container">
+          <div className="login-card">
             <h2>Login</h2>
 
             <input
@@ -36,11 +38,19 @@ function Login(){
             onChange={e => setpassword(e.target.value)}
           />
 
+          <p onClick={() => window.location.href="/forget-Password"} 
+           style={{cursor:"pointer", color:"blue"}}>
+               Forgot Password?
+           </p>
+
           <button onClick = {login}>Login</button>
+
+  
+
 
         </div>
 
-
+        </div>
 
     );
 

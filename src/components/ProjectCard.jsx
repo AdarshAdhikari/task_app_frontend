@@ -1,7 +1,10 @@
 
 import API from "../api/api";
-import {useEffect , useState } from "react";
-import ProgressBar from "./progressBar"; 
+import { useEffect, useState } from "react";
+
+import ProgressCircle from "./ProgressCircle";
+import "./projectcard.css";
+
 
 
 function ProjectCard({ project, reload }) {
@@ -9,11 +12,11 @@ function ProjectCard({ project, reload }) {
   const [taskDesc, setTaskDesc] = useState("");
   const [progress, setProgress] = useState(0);
 
-//load progress 
-const loadProgress = async () => {
-  const res = await API.get(`/projects/${project._id}/progress`);
-  setProgress(res.data.percent);
-};
+  //load progress 
+  const loadProgress = async () => {
+    const res = await API.get(`/projects/${project._id}/progress`);
+    setProgress(res.data.percent);
+  };
   useEffect(() => {
     loadProgress();
   }, []);
@@ -40,17 +43,37 @@ const loadProgress = async () => {
     loadProgress();
   };
 
+  //delete project
+  const deleteProject = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this project?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await API.delete(`/projects/${project._id}`);
+      reload(); // refresh project list
+    } catch (err) {
+      alert("Failed to delete project");
+      console.error(err);
+    }
+  };
+
+
   return (
-    <div style={{ border: "2px solid blue", padding: 10, margin: 10 }}>
-      <h3>{project.name}</h3>
-      <p>{project.description}</p>
+    <div className="project-card">
+      {/* Header */}
+      <div className="project-card-header">
+        <h3>{project.name}</h3>
+        <ProgressCircle percent={progress} />
+      </div>
 
-        {/* Progress Bar */}
-        <ProgressBar percent={progress} />
-
+      {/* Description */}
+      <p className="project-desc">{project.description}</p>
 
       {/* Add Task Form */}
-      <div>
+      <div className="add-task-form">
         <input
           placeholder="Task name"
           value={taskName}
@@ -65,7 +88,7 @@ const loadProgress = async () => {
       </div>
 
       {/* Task List */}
-      <ul>
+      <ul className="project-tasks">
         {project.tasks.map((t, index) => (
           <li key={t._id}>
             <input
@@ -73,12 +96,18 @@ const loadProgress = async () => {
               checked={t.completed}
               onChange={() => toggleTask(index, t.completed)}
             />
-            {t.name} - {t.description}
+            {t.name} – {t.description}
           </li>
         ))}
       </ul>
+
+      {/* Footer */}
+      <div className="project-footer">
+        <button onClick={deleteProject}>Delete</button>
+      </div>
     </div>
   );
+
 }
 
 export default ProjectCard;

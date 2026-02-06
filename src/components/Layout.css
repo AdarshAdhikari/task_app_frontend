@@ -1,0 +1,31 @@
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1e1e2f;
+  color: white;
+  padding: 20px;
+}
+
+.logo {
+  margin-bottom: 30px;
+}
+
+.sidebar-nav p {
+  cursor: pointer;
+  margin-bottom: 15px;
+  color: #ddd;
+}
+
+.sidebar-nav p:hover {
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background: #f4f6f8;
+}
