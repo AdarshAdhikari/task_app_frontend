@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import API from "../api/api";
 import ProjectCard from "../components/ProjectCard";
+import "./projects.css";
+
+import AddProjectCard from "../components/AddProjectCard";
+import Layout from "../components/Layout";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  
 
   // Load projects
   const loadProjects = async () => {
@@ -18,42 +21,43 @@ function Projects() {
   }, []);
 
   // Create project
-  const createProject = async () => {
-    await API.post("/projects", { name, description });
-    setName("");
-    setDescription("");
-    loadProjects(); // refresh list
-  };
+ const createProject = async (projectName, projectDescription) => {
+  await API.post("/projects", {
+    name: projectName,
+    description: projectDescription
+  });
+  loadProjects();
+};
 
-  return (
-    <div>
-      <h2>My Projects</h2>
+const handleAddProject = () => {
+  const projectName = prompt("Enter project name");
+  if (!projectName) return;
 
-      {/* Create Project Form */}
-      <div style={{ border: "1px solid black", padding: 10, marginBottom: 20 }}>
-        <h3>Create Project</h3>
-        <input
-          placeholder="Project Name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
-        <br />
-        <input
-          placeholder="Description"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-        />
-        <br />
-        <button onClick={createProject}>Add Project</button>
+  const projectDescription = prompt("Enter project description");
+  createProject(projectName, projectDescription);
+};
+
+
+
+return (
+  <Layout>
+    <div className="projects-page">
+      <h2 className="page-title">My Projects</h2>
+
+      <div className="projects-grid">
+        {projects.map((p) => (
+          <ProjectCard
+            key={p._id}
+            project={p}
+            reload={loadProjects}
+          />
+        ))}
+
+        <AddProjectCard onAdd={handleAddProject} />
       </div>
-
-      {/* Project List */}
-       {projects.map((p) => (
-      <ProjectCard key={p._id} project={p} reload={loadProjects} />
-    ))}
-
     </div>
-  );
-}
+  </Layout>
+);
+};
 
 export default Projects;

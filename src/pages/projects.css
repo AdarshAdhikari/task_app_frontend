@@ -1,0 +1,42 @@
+
+.projects-page {
+  padding: 20px;
+  background: linear-gradient(180deg, #f5f7fb 0%, #eef1f6 100%);
+  min-height: 100vh;
+}
+
+.page-title {
+  margin-bottom: 24px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Create project card */
+.create-project-card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  max-width: 400px;
+  margin-bottom: 30px;
+}
+
+.create-project-card input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+
+.create-project-card button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Project grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
