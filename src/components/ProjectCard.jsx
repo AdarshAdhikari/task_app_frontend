@@ -24,6 +24,11 @@ function ProjectCard({ project, reload }) {
 
   // Add task
   const addTask = async () => {
+    if (!taskName.trim()) {
+      alert("Task name is required");
+      return;
+    }
+
     await API.post(`/projects/${project._id}/tasks`, {
       name: taskName,
       description: taskDesc
@@ -35,8 +40,8 @@ function ProjectCard({ project, reload }) {
   };
 
   // Toggle task completed
-  const toggleTask = async (index, current) => {
-    await API.put(`/projects/${project._id}/task/${index}`, {
+  const toggleTask = async (taskId, current) => {
+    await API.put(`/projects/${project._id}/task/${taskId}`, {
       completed: !current
     });
     reload();
@@ -89,12 +94,12 @@ function ProjectCard({ project, reload }) {
 
       {/* Task List */}
       <ul className="project-tasks">
-        {project.tasks.map((t, index) => (
+        {project.tasks.map((t) => (
           <li key={t._id}>
             <input
               type="checkbox"
               checked={t.completed}
-              onChange={() => toggleTask(index, t.completed)}
+              onChange={() => toggleTask(t._id, t.completed)}
             />
             {t.name} – {t.description}
           </li>

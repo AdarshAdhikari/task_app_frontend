@@ -1,59 +1,54 @@
-import { useState } from "react";   
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 import "./login.css";
 
-function Login(){
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    const[email, setEmail] = useState("");
-    const[password , setpassword]= useState("");
+  const login = async () => {
+    try {
+      const res = await API.post("/auth/login", { email, password });
+      localStorage.setItem("token", res.data.token);
+      alert("Login successful");
+      navigate("/projects");
+    } catch (err) {
+      alert(err.response?.data || "Login failed");
+      console.error(err.response?.data);
+    }
+  };
 
-    const login = async() =>{
-       
-     try{
-        const res = await API.post("/auth/login",{email, password});
-        localStorage.setItem("token", res.data.token);
-        alert("Login Successfull");
-        console.log("Token:", res.data.token);
-        window.location.href = "/projects";
-     }
-     catch(err){
-        alert("Login Failed");
-        console.error(err);
-     }
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Login</h2>
 
-    };
-    return(
-        <div className="login-container">
-          <div className="login-card">
-            <h2>Login</h2>
+        <input
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-            <input
-            placeholder="Email"
-            onChange={e => setEmail(e.target.value)}
-            />
+        <input
+          placeholder="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <input 
-            placeholder="Password"
-            type = "password"
-            onChange={e => setpassword(e.target.value)}
-          />
+        <p
+          onClick={() => navigate("/forget-password")}
+          style={{ cursor: "pointer", color: "blue" }}
+        >
+          Forgot Password?
+        </p>
 
-          <p onClick={() => window.location.href="/forget-Password"} 
-           style={{cursor:"pointer", color:"blue"}}>
-               Forgot Password?
-           </p>
-
-          <button onClick = {login}>Login</button>
-
-  
-
-
-        </div>
-
-        </div>
-
-    );
-
+        <button onClick={login}>Login</button>
+      </div>
+    </div>
+  );
 }
 
 export default Login;
