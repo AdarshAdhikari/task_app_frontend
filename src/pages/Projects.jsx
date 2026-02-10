@@ -11,10 +11,16 @@ function Projects() {
   
 
   // Load projects
-  const loadProjects = async () => {
+ const loadProjects = async () => {
+  try {
     const res = await API.get("/projects");
     setProjects(res.data);
-  };
+  } catch (err) {
+    console.error(err.response?.data);
+    alert("Failed to load projects");
+  }
+};
+
 
   useEffect(() => {
     loadProjects();
