@@ -46,7 +46,7 @@ const handleAddProject = () => {
 
 
 return (
-  <Layout>
+  
     <div className="projects-page">
       <h2 className="page-title">My Projects</h2>
 
@@ -62,7 +62,7 @@ return (
         <AddProjectCard onAdd={handleAddProject} />
       </div>
     </div>
-  </Layout>
+  
 );
 };
 

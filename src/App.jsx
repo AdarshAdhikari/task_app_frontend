@@ -5,32 +5,32 @@ import Forgetpassword from "./pages/ForgetPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Tasks from "./pages/Tasks";
 import AssignTask from "./pages/AssignTask";
+import Layout from "./components/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <Router>
       <Routes>
+
+        {/* Public routes */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forget-password" element={<Forgetpassword />} />
-        <Route path="/tasks" element={
-          <ProtectedRoute>
-            <Tasks />
-          </ProtectedRoute>
-          }/>
 
-          <Route path="/assign-task" element ={<ProtectedRoute><AssignTask /></ProtectedRoute>
-          }
-         />
-        
-        <Route path="/projects" element={
-          <ProtectedRoute>
-            <Projects />
+        {/* Protected routes with Layout */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <Layout />
             </ProtectedRoute>
-          } 
-          />
-        
+          }
+        >
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/assign-task" element={<AssignTask />} />
+        </Route>
+
       </Routes>
     </Router>
   );
