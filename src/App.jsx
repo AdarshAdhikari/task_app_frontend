@@ -28,7 +28,7 @@ function App() {
         >
           <Route path="/projects" element={<Projects />} />
           <Route path="/tasks" element={<Tasks />} />
-          <Route path="/assign-task" element={<AssignTask />} />
+          
         </Route>
 
       </Routes>

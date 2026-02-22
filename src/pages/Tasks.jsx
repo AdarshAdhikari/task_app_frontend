@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 import "./Tasks.css";
 
@@ -7,6 +8,8 @@ const Tasks = () => {
   const [sentTasks, setSentTasks] = useState([]);
   const [receivedTasks, setReceivedTasks] = useState([]);
   const [filter, setFilter] = useState("all");
+  
+  const { refreshKey } = useOutletContext() || {};
 
   const token = localStorage.getItem("token");
 
@@ -26,7 +29,7 @@ const Tasks = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [refreshKey]);
 
   const deleteTask = async (id) => {
     try {

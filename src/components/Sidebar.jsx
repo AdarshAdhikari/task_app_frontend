@@ -1,8 +1,13 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { FiFolder, FiCheckSquare, FiPlusCircle, FiLogOut } from "react-icons/fi";
+import {
+  FiFolder,
+  FiCheckSquare,
+  FiPlusCircle,
+  FiLogOut,
+} from "react-icons/fi";
 import "./Layout.css";
 
-function Sidebar() {
+function Sidebar({ onAssignClick }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,10 +39,7 @@ function Sidebar() {
             <FiCheckSquare className="icon" /> My Tasks
           </p>
 
-          <p
-            className={isActive("/assign-task") ? "nav-item active" : "nav-item"}
-            onClick={() => navigate("/assign-task")}
-          >
+          <p className="nav-item" onClick={onAssignClick}>
             <FiPlusCircle className="icon" /> Assign Task
           </p>
         </div>
