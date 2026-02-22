@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "./AssignTask.css";
 
-const AssignTask = () => {
+const AssignTask = ({ onSuccess }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [users, setUsers] = useState([]);
@@ -9,7 +10,6 @@ const AssignTask = () => {
 
   const token = localStorage.getItem("token");
 
-  // Fetch users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -50,55 +50,73 @@ const AssignTask = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
-      alert("Task assigned successfully");
       setTitle("");
       setDescription("");
       setSelectedUsers([]);
+
+      if (onSuccess) onSuccess();
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Assign Task</h2>
+    <div className="assign-container">
+      <h2 className="assign-title">Assign Task</h2>
 
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Task title"
+          className="assign-input"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <br /><br />
 
         <textarea
           placeholder="Description"
+          className="assign-textarea"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <br /><br />
 
-        <h4>Select Users:</h4>
-        {users.map((user) => (
-          <div key={user._id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedUsers.includes(user._id)}
-                onChange={() => handleCheckboxChange(user._id)}
-              />
-              {user.name || user.email}
-            </label>
-          </div>
-        ))}
+       <h4 className="assign-section-title">Select Team Members</h4>
 
-        <br />
-        <button type="submit">Assign Task</button>
+        <div className="user-grid">
+          {users.map((user) => {
+            const isSelected = selectedUsers.includes(user._id);
+
+            return (
+              <div
+                key={user._id}
+                className={`user-card ${isSelected ? "selected" : ""}`}
+                onClick={() => handleCheckboxChange(user._id)}
+              >
+                <div className="user-avatar">
+                  {user.name?.charAt(0).toUpperCase()}
+                </div>
+
+                <div className="user-info">
+                  <h4>{user.name || user.email}</h4>
+                  <p>Team Member</p> {/*we can assign role for each member here in future:  <p>{user.role}</p>*/
+                  }
+                </div>
+
+                <div className="user-selector">
+                  <div className={`radio ${isSelected ? "active" : ""}`} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <button className="assign-button" type="submit">
+          Assign Task
+        </button>
       </form>
     </div>
   );

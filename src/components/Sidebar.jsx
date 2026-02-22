@@ -1,6 +1,13 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  FiFolder,
+  FiCheckSquare,
+  FiPlusCircle,
+  FiLogOut,
+} from "react-icons/fi";
+import "./Layout.css";
 
-function Sidebar() {
+function Sidebar({ onAssignClick }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -13,46 +20,34 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <h2 className="logo">Tasker</h2>
+      <div>
+        <h2 className="logo">Tasker</h2>
+        <p className="subtitle">Task Management SaaS</p>
 
-      <nav className="sidebar-nav">
-        <p
-          onClick={() => navigate("/projects")}
-          style={{
-            cursor: "pointer",
-            fontWeight: isActive("/projects") ? "bold" : "normal",
-          }}
-        >
-          Projects
-        </p>
+        <div className="sidebar-nav">
+          <p
+            className={isActive("/projects") ? "nav-item active" : "nav-item"}
+            onClick={() => navigate("/projects")}
+          >
+            <FiFolder className="icon" /> Projects
+          </p>
 
-        <p
-          onClick={() => navigate("/tasks")}
-          style={{
-            cursor: "pointer",
-            fontWeight: isActive("/tasks") ? "bold" : "normal",
-          }}
-        >
-          My Tasks
-        </p>
+          <p
+            className={isActive("/tasks") ? "nav-item active" : "nav-item"}
+            onClick={() => navigate("/tasks")}
+          >
+            <FiCheckSquare className="icon" /> My Tasks
+          </p>
 
-        <p
-          onClick={() => navigate("/assign-task")}
-          style={{
-            cursor: "pointer",
-            fontWeight: isActive("/assign-task") ? "bold" : "normal",
-          }}
-        >
-          Assign Task
-        </p>
+          <p className="nav-item" onClick={onAssignClick}>
+            <FiPlusCircle className="icon" /> Assign Task
+          </p>
+        </div>
+      </div>
 
-        <p
-          onClick={handleLogout}
-          style={{ cursor: "pointer", color: "red" }}
-        >
-          Logout
-        </p>
-      </nav>
+      <p className="logout" onClick={handleLogout}>
+        <FiLogOut className="icon" /> Logout
+      </p>
     </div>
   );
 }

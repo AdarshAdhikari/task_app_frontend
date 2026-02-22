@@ -1,0 +1,113 @@
+.assign-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.assign-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.assign-input,
+.assign-textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.assign-users {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.assign-button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+}
+
+.assign-button:hover {
+  background: #4338ca;
+}
+
+
+.user-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  
+  margin-bottom: 16px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  min-width: 170px;
+  transition: all 0.15s ease;
+}
+
+.user-card:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.user-card.selected {
+  background: #eef2ff;
+  border-color: #4f46e5;
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info {
+  flex: 1;
+  margin-left: 6px;
+}
+
+.user-info h4 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.user-selector .radio {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+}
+
+.user-selector .radio.active {
+  border-color: #4f46e5;
+  background: #4f46e5;
+}
